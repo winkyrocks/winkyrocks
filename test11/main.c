@@ -83,5 +83,3 @@ int main()
     max = find_longest_continous_nondescending(a, sizeof(a)/sizeof(int));
     printf("MAX=%d\n", max);
 }
-
-
