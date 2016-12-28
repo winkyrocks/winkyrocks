@@ -14,12 +14,16 @@ int CalculateLargestRectangle(const std::vector<int> &heights)
     int max_rectangle_area = 0;
     for (int i = 0; i <= (int)heights.size(); ++i)
     {
-//        if (!pillar_indices.empty() && i < heights.size() && heights[i] == heights[pillar_indices.top()])
-//        {
-//            std::cout << i << "REPLACE" << pillar_indices.top() << std::endl;
-//            pillar_indices.pop();
-//            pillar_indices.emplace(i);
-//        }
+        if (!pillar_indices.empty() && i < (int)heights.size() && heights[i] == heights[pillar_indices.top()])
+        {
+            // Replace the earlier building with the same height.
+            // This ensures the later buidlings have the correct left endpoints.
+            std::cout << i << ":POP=" << pillar_indices.top();
+            pillar_indices.pop();
+            pillar_indices.emplace(i);
+            std::cout << ",PUSH=" << pillar_indices.top() << std::endl;
+            continue;
+        }
 
         while (!pillar_indices.empty() && IsNewPillarOrReachEnd(heights, i, pillar_indices.top()))
         {
