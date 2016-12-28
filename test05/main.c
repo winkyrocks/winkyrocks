@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <math.h>
 
 #define MAX_STRLEN 4
 
@@ -77,6 +78,30 @@ void combine(int pos, int start, int combine_length)
     }
 }
 
+void powerset(int pos, int start)
+{
+    memset(combine_output, 0, MAX_STRLEN);
+    combine(pos, start, 0);
+}
+
+void powerset_norecur(const char* arr, int arr_length)
+{
+    for (int i = 0; i < 1 << arr_length; ++i)
+    {
+        memset(combine_output, 0, MAX_STRLEN);
+        int output_index = 0;
+        int bit = i;
+        while (bit)
+        {
+            int arr_index = log2(bit & ~(bit - 1));
+            combine_output[output_index++] = arr[arr_index];
+            bit &= bit - 1;
+        }
+
+        printf("%s\n", strlen(combine_output) ? combine_output : "<>");
+    }
+}
+
 int main()
 {
     printf("==========permutation==========\n");
@@ -85,9 +110,14 @@ int main()
     permutate_inplace(0, str_dups);
     printf("\n");
     permutate(0);
-    printf("==========combination==========\n");
-    combine(0, 0, 0);
     printf("\n");
+    printf("==========combination==========\n");
     combine(0, 0, 2);
+    printf("\n");
+    printf("==========powerset==========\n");
+    powerset(0, 0);
+    printf("\n");
+    powerset_norecur(str, MAX_STRLEN);
+    printf("\n");
     return 0;
 }
